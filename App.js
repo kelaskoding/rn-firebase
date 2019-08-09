@@ -1,3 +1,4 @@
+import './src/utilities/fixtimerbug';
 import React, {Component} from 'react';
 import Routes from './src/Routes';
 

@@ -4,10 +4,13 @@ import {
   Header,
   Body,
   Content,
-  Spinner,
+  View,
   List,
   ListItem,
-  Text
+  Text,
+  Right,
+  Icon,
+  Button
 } from "native-base";
 import firebase from "../utilities/Firebase";
 import {
@@ -16,8 +19,10 @@ import {
   PlaceholderLine,
   Fade
 } from "rn-placeholder";
+import { Actions } from "react-native-router-flux";
 
 export default class Home extends Component {
+  
   constructor() {
     super();
     this.ref = firebase.firestore().collection("boards");
@@ -25,7 +30,6 @@ export default class Home extends Component {
     this.state = {
       isLoading: true,
       boards: [],
-      isReady: "unexist"
     };
   }
 
@@ -41,7 +45,7 @@ export default class Home extends Component {
         author
       });
     });
-    this.setState({ boards: tmp, isLoading: false, isReady: "existing" });
+    this.setState({ boards: tmp, isLoading: false });
   };
 
   componentDidMount() {
@@ -51,7 +55,37 @@ export default class Home extends Component {
   render() {
     let view;
     if (this.state.isLoading) {
-      view = <Spinner color="blue" />;
+      view = (
+        <View style={{ padding: 10 }}>
+          <Placeholder
+            Animation={Fade}
+            Left={PlaceholderMedia}>
+            <PlaceholderLine />
+            <PlaceholderLine width={60} />
+            <PlaceholderLine width={30} />
+          </Placeholder>
+          <Placeholder
+            Animation={Fade}
+            Left={PlaceholderMedia}>
+            <PlaceholderLine />
+            <PlaceholderLine width={60} />
+            <PlaceholderLine width={30} />
+          </Placeholder>
+          <Placeholder
+            Animation={Fade}
+            Left={PlaceholderMedia}>
+            <PlaceholderLine />
+            <PlaceholderLine width={60} />
+            <PlaceholderLine width={30} />
+          </Placeholder>
+          <Placeholder
+            Animation={Fade}
+            Left={PlaceholderMedia}>
+            <PlaceholderLine />
+            <PlaceholderLine width={60} />
+            <PlaceholderLine width={30} />
+          </Placeholder>
+        </View>);
     } else {
       view = (
         <List>
@@ -73,17 +107,14 @@ export default class Home extends Component {
               RN Firestore
             </Text>
           </Body>
+          <Right>
+            <Button transparent onPress={()=> Actions.add()}>
+              <Icon type='MaterialIcons' name='add'/>
+            </Button>
+          </Right>
         </Header>
         <Content>
-          <Placeholder
-            Animation={Fade}
-            Left={PlaceholderMedia}
-            Right={PlaceholderMedia}
-          >
-            <PlaceholderLine width={80} />
-            <PlaceholderLine />
-            <PlaceholderLine width={30} />
-          </Placeholder>
+          {view}
         </Content>
       </Container>
     );
